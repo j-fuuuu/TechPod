@@ -6,14 +6,33 @@
 //
 
 import UIKit
+import AVFoundation
 
-@main
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //play background
+        let seesion = AVAudioSession.sharedInstance()
+        do{
+            try seesion.setCategory(.playback, mode: .default)
+        }catch {
+            //エラー処理
+            fatalError("カテゴリ設定失敗")
+        }
+        //sessonのアクティブ化
+        do {
+            try seesion.setActive(true)
+        } catch {
+            //audio sessionの有効化失敗の処置
+            //ここではエラーとして停止してる
+            fatalError("session有効化失敗")
+        }
+        
         return true
     }
 
